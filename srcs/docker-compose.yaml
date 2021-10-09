@@ -42,3 +42,19 @@ networks:
 	network:
 		name: network
 		driver: bridge
+
+volumes:
+	wp:
+		driver: local
+		name: wordpress
+		driver_opts:
+			type: none
+			o: bind
+			device: /home/hnewman/data/wp
+	db:
+		driver: local
+		name: db
+		driver_opts:
+			type: none
+			o: bind
+			device: /home/hnewman/data/db
