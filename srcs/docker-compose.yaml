@@ -24,8 +24,6 @@ services:
 			- network
 	nginx:
 		container_name: nginx
-		domainname: localhost
-		hostname: localhost
 		build: requirements/Nginx
 		env_file: .env
 		user: root
