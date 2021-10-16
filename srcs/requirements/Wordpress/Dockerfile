@@ -10,4 +10,4 @@ EXPOSE 9000
 
 COPY ./conf/ /var/www/
 RUN chmod +x /var/www/wp.sh
-CMD ["var/www/wp.sh"]s
+CMD ["var/www/wp.sh"]
