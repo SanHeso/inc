@@ -1,58 +1,58 @@
 version: '3.9'
 
 services:
-	mariadb:
-		container_name: mariadb
-		build: requirements/MariaDB/
-		restart: always
-		env_file: .env
-		user: root
-		volumes:
-			- db:/var/lib/mysql
-		networks:
-			- network
-	wordpress:
-		container_name: wordpress
-		build: requirements/Wordpress
-		env_file: .env
-		user: root
-		depends_on:
-			- mariadb
-		volumes:
-			- wp:/var/www/html
-		networks:
-			- network
-	nginx:
-		container_name: nginx
-		build: requirements/Nginx
-		env_file: .env
-		user: root
-		volumes:
-			- wp:/var/www/html
-		depends_on:
-			- wordpress
-		ports:
-			- "443:443"
-		networks:
-			- network
+  mariadb:
+    container_name: mariadb
+    build: requirements/MariaDB/
+    restart: always
+    env_file: .env
+    user: root
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - network
+  wordpress:
+    container_name: wordpress
+    build: requirements/Wordpress
+    env_file: .env
+    user: root
+    depends_on:
+      - mariadb
+    volumes:
+      - wp:/var/www/html
+    networks:
+    - network
+  nginx:
+    container_name: nginx
+    build: requirements/Nginx
+    env_file: .env
+    user: root
+    volumes:
+      - wp:/var/www/html
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    networks:
+      - network
 
 networks:
-	network:
-		name: network
-		driver: bridge
+  network:
+    name: network
+    driver: bridge
 
 volumes:
-	wp:
-		driver: local
-		name: wordpress
-		driver_opts:
-			type: none
-			o: bind
-			device: /home/hnewman/data/wp
-	db:
-		driver: local
-		name: db
-		driver_opts:
-			type: none
-			o: bind
-			device: /home/hnewman/data/db
+  wp:
+    driver: local
+    name: wordpress
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/hnewman/data/wp
+  db:
+    driver: local
+    name: mariadb
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/hnewman/data/db
