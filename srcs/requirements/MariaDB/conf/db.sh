@@ -1,23 +1,26 @@
-#!/bin/bash
-
-sed -i "s/\#port    /port    /" "/etc/mysql/mariadb.conf.d/50-server.cnf"
-sed -i "s/bind-addres/#bind-address/" "/etc/mysql/mariadb.conf.d/50-server.cnf"
+# sed -i "s/\#port    /port    /" "/etc/mysql/mariadb.conf.d/50-server.cnf"
+# sed -i "s/bind-addres/#bind-address/" "/etc/mysql/mariadb.conf.d/50-server.cnf"
 
 chown -R mysql:mysql /var/lib/mysql;
-
-service mysql start;
-
-echo "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';";
-echo "CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';" | mariadb;
-echo "CREATE DATABASE IF NOT EXISTS ${DB_NAME} DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
-echo "CREATE DATABASE IF NOT EXISTS ${DB_NAME} DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;" | mariadb;
-echo "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}'@'%';";
-echo "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}'@'%';" | mariadb;
-echo "update mysql.user set plugin='mysql_native_password' where user='${DB_USER}';";
-echo "update mysql.user set plugin='mysql_native_password' where user='${DB_USER}';" | mariadb;
-echo "FLUSH PRIVILEGES;";
-echo "FLUSH PRIVILEGES;" | mariadb;
-
-service mysql stop;
-chown -R mysql /var/run/mysqld;
-mysqld;
+chmod 755 -R /var/lib/mysql
+if [ ! -d /var/lib/mysql/wp ]; then
+  mysql_install_db --user=mysql --ldata=/var/lib/mysql
+  service mysql start;
+  service mysql status;
+  echo "create user 'hnewman'@'%' identified by 'raritet42';" | mysql -u root
+  echo "create database if not exists wp;" | mysql -u root
+  echo "grant all privileges on wp.* to 'hnewman'@'%' identified by 'raritet42';" | mysql -u root
+  echo "flush privileges;" | mysql -u root
+# mysqladmin -u root password raritet41
+else
+  mkdir -p /var/run/mysqld
+  if [ ! -f /var/run/mysqld/mysqld.sock ]; then
+    mkfifo /var/run/mysqld/mysqld.sock
+  fi
+  touch /var/run/mysqld/mysqld.pid
+fi
+  chown -R mysql /var/run/mysqld
+exec "$@"
+# service mysql stop;
+# chown -R mysql /var/run/mysqld;
+# mysqld;

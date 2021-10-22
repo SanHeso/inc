@@ -5,6 +5,7 @@ RUN apt-get install -y mariadb-server
 
 EXPOSE 3306
 
-COPY ./conf/ /var/www/
-RUN chmod +x /var/www/db.sh
-CMD ["var/www/db.sh"]
+COPY ./conf/my.cnf /etc/mysql/my.cnf
+COPY ./conf/db.sh /var/www/
+RUN bash var/www/db.sh
+CMD mysqld

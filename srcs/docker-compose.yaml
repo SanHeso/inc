@@ -28,6 +28,8 @@ services:
     env_file: .env
     user: root
     volumes:
+      - ./requirements/Nginx/tools/nginx-error.log:/var/log/nginx/error.log
+      - ./requirements/Nginx/tools/nginx-access.log:/var/log/nginx/access.log
       - wp:/var/www/html
     depends_on:
       - wordpress
