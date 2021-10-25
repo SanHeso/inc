@@ -1,6 +1,3 @@
-# sed -i "s/\#port    /port    /" "/etc/mysql/mariadb.conf.d/50-server.cnf"
-# sed -i "s/bind-addres/#bind-address/" "/etc/mysql/mariadb.conf.d/50-server.cnf"
-
 chown -R mysql:mysql /var/lib/mysql;
 chmod 755 -R /var/lib/mysql
 if [ ! -d /var/lib/mysql/wp ]; then
