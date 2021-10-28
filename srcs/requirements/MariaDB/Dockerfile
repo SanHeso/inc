@@ -7,5 +7,5 @@ EXPOSE 3306
 
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 COPY ./conf/db.sh /var/www/
-ENTRYPOINT ["bash", "var/www/db.sh"]
+RUN bash var/www/db.sh
 CMD mysqld

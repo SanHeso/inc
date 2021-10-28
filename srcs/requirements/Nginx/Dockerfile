@@ -9,6 +9,5 @@ RUN openssl req -nodes -x509 -days 365 -newkey rsa:4096 \
 EXPOSE 443
 COPY ./conf/default /etc/nginx/sites-available/
 COPY ./conf/ /var/www/
-# RUN chmod +x /var/www/nginx.sh
+
 CMD ["bash", "var/www/nginx.sh"]
-# CMD ["nginx", "-g", "daemon off;"]

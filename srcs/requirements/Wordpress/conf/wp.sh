@@ -1,6 +1,5 @@
-service php7.3-fpm start
-service php7.3-fpm status
-
+mkdir -p /run/php/
+touch /run/php/php7.3-fpm.pid
 if [ ! -f /var/www/html/wp-config.php ]; then
 	mkdir -p var/www/html/
 	wget https://raw.githubusercontent.com/wp-cli/builds//gh-pages/phar/wp-cli.phar
@@ -20,5 +19,4 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	rm -rf /etc/php/7.3/fpm/pool.d/www.conf
 fi
 mv /var/www/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-service php7.3-fpm stop
 /usr/sbin/php-fpm7.3 --nodaemonize

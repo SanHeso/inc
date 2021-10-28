@@ -13,6 +13,4 @@ EXPOSE 9000
 
 COPY ./conf/ /var/www/
 COPY ./conf/www.conf /var/www/
-# RUN chmod +x /var/www/wp.sh
 CMD ["bash", "var/www/wp.sh"]
-# CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
